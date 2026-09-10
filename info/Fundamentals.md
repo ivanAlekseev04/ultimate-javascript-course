@@ -7,6 +7,7 @@
 - "console.log('Test');" that is called a statement in JS
 - For strings single quotes ' are more common to the double quotes " while still both can be used
 - Naming of the variables is in `camelCase`
+- **Optional** parameters are labeled with `?` &rarr; `array.join(separator?: string);`
 
 - Between these tags `<script></script>` inline JS can be written in HTML file or some file can be referenced
 - NodeJS - is a runtime environment for executing JS code (build on Google V8 engine)
@@ -79,6 +80,18 @@ typeof c; // 'object'
 - Null - is used when we want to mark that there is no value; can be used to clear a value of the varible
 - Symbol
 
+#### String methods
+* `.split(separator: string)` &rarr; from the string produces new array with its values by given separator (if separator doesn't exists, then array with the initial string is returned as a single element)
+```javascript
+const str = "This is my first day!";
+
+const splitted = str.split(' ');
+console.log(splitted); // ['This', 'is', 'my', 'first', 'day!']
+
+const joinedStr = splitted.join('-'); 
+console.log(joinedStr); // This-is-my-first-day!
+```
+
 ### Reference types 🔗
 
 - Object
@@ -125,7 +138,7 @@ console.log(a); // { a = 5 }
 
 #### Array 📚
 
-- 📌 Array is also an Object. By clickig `.` we can see some default methods/properties (like "arr.length")
+- 📌 Array is also an Object. By clicking `.` we can see some default methods/properties (like "arr.length")
 - Is used to store multiple values in one collection.
 - Elements of the array are not restricted to be **the same type**
 
@@ -178,7 +191,7 @@ test(a);
 ### Truthy & falsy values (additional information, not related strictly to the value/reference types) 🌓
 
 - Only values that are of type `Boolean` can be **true** or **false**.
-- Other values are either `truthy` (value can be castet to true) or `falsy` (value can be casted to false) when are used with the **logical operators**
+- Other values are either `truthy` (value can be casted to true) or `falsy` (value can be casted to false) when are used with the **logical operators**
 
 #### Falsy values ❌
 
@@ -696,3 +709,247 @@ const c3 = Circle.call({}, 1, 2);
 ---
 
 # Arrays 📚
+
+## General info
+* Arrays are `objects`, so their properties can be retrieved via dot `.` notation
+
+## Iterating an array
+
+### Using `for()` loop
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+
+for (const number of numbers) {
+    console.log(number);
+}
+```
+
+### Using `forEach()` function
+* Has optional paremter to retrieve **index** of the element
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+
+numbers.forEach((number, index) => console.log(`Index: ${index}, Number: ${number}`));
+```
+
+## General purpose methods
+
+### Adding elements
+* Add elements to the very **end** &rarr; `.push(...items: number[])` 
+* Add elements to the very **start** &rarr; `.unshift(...items: number[])`
+* Add elements to the **whatever position** &rarr; `.splice(startIndex: number, elementsToDeleteFromThatIndex: number, ...items: number[])`
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+
+numbers.splice(1, 2, ...[6, 7]);
+console.log(numbers);
+// [ 1, 6, 7, 4, 5]
+
+numbers.splice(1, 0, ...[9, 8]);
+console.log(numbers);
+// [ 1, 9, 8, 6, 7, 4, 5]
+```
+
+### Finding elements
+
+#### Value search
+* `indexOf(val: number, fromIndex: number)` &rarr; index of element if exists, otherwise **-1**
+* `lastIndexOf(val: number, fromIndex: number)` &rarr; index of element if exists, otherwise **-1**
+* `includes(val: number, fromIndex: number)` &rarr; **true** in case element exists
+
+#### Predicate search
+* `find(function predicate() {...})` &rarr; **true** in case element exists
+* `findIndex(function predicate() {...})` &rarr; index of element if exists, otherwise **-1**
+
+#### Primitives
+```javascript
+const numbers = [1, 2, 3, 4, 5, 3];
+
+console.log(numbers.indexOf(2)); // 1
+console.log(numbers.lastIndexOf(3)); // 5
+console.log(numbers.includes(9)); // false
+```
+
+#### Reference types
+* By default reference types are check by the **reference equality** &rarr; that's why they should be searched for by the **predicate functions**
+```javascript
+const courses = [
+  { id: 1, name: "JavaScript Basics", duration: "3 hours" },
+  { id: 2, name: "Advanced React", duration: "5 hours" },
+];
+
+const foundCourse = courses.find(function(course) {
+    return course.name === "Advanced React";
+});
+
+console.log(courses.includes({ id: 2, name: "Advanced React", duration: "5 hours" })); // false
+console.log(foundCourse); // { id: 2, name: "Advanced React", duration: "5 hours" }
+```
+
+#### Arrow functions (lambda functions)
+```javascript
+const courses = [
+  { id: 1, name: "JavaScript Basics", duration: "3 hours" },
+  { id: 2, name: "Advanced React", duration: "5 hours" },
+];
+
+// With plain function
+// const foundCourse = courses.find(function(course) {
+//     return course.name === "Advanced React";
+// });
+
+// With arrow function
+const foundCourse = courses.find(course => course.name === "Advanced React");
+
+console.log(foundCourse);
+```
+
+### Removing elements
+* Remove element from the very **end** &rarr; `.pop()` 
+* Remove element from the very **start** &rarr; `.shift()`
+* Remove element(s) from the **whatever position** &rarr; `.splice(startIndex: number, elementsToDeleteFromThatIndex: number)`
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+
+const popF = numbers.pop();
+
+console.log('After pop:', numbers); // [1, 2, 3, 4]
+console.log('Popped value:', popF); // 5
+
+const shiftF = numbers.shift();
+
+console.log('After shift:', numbers); // [2, 3, 4]
+console.log('Shifted value:', shiftF); // 1
+
+const spliceF = numbers.splice(1, 2);
+
+console.log('After splice:', numbers); // [2, 4]
+console.log('Spliced values:', spliceF); // [3, 4]
+```
+
+#### Emptying of the array
+1. Assigning to the **new empty array** (is not good when **multiple references** exist to the same array)
+2. Set `length` to **0**
+3. Splicing from 0 index till the last index
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+
+// 1 variant
+// numbers = [];
+
+// 2 variant
+// numbers.length = 0;
+
+// 3 variant
+// numbers.splice(0, numbers.length);
+```
+
+### Combining & slicing
+> Operations are returning new modified array, not doing the `in-place` edit
+
+> `Primitives`: **values** are copied/removed, `Reference types`: **references** are copied/removed
+
+#### Methods
+* `.concat(array: number[])` 
+* `.slice(inclusiveFromIndex: number, exclusiveToIndex: number)`
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+const doubledNumbers = numbers.map(num => num * 2);
+
+const concatF = numbers.concat(doubledNumbers);
+
+console.log(numbers); // original array
+console.log(concatF); // concatenated array with doubled numbers
+
+const slicedNumbers = numbers.slice(2, 4);
+
+console.log(numbers); // original array
+console.log(slicedNumbers); // [3, 4]
+```
+
+#### Using `... spread operator` for combining arrays (ES6)
+* Spread operator &mdash; is an operator thar decomposes one array into to separate its elements (is working similar to the Java `varargs` operator)
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+const doubledNumbers = numbers.map(num => num * 2);
+
+const combined = [...numbers, ...doubledNumbers];
+
+console.log(combined); // [1, 2, 3, 4, 5, 2, 4, 6, 8, 10]
+```
+
+### Join the elements
+* `join(separator: string)` &rarr; create a string and after each element insert a separator **excluding the last one**
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+
+const joinedArr = numbers.join(', ');
+
+console.log(joinedArr); // 1, 2, 3, 4, 5
+console.log(typeof joinedArr); // string
+```
+
+### Sorting
+* `.sort(compareFn?: ((a: number, b: number) => number) | undefined)` &rarr; **in-place** method to sort an array in **ascending order** by default or is using a **compare function** if provided
+> `.sort()` performs sorting in ascending order over the values that are **converted to strings** in case `no comparator function (predicate) was supplied`. String values are compared by the **ASCII table**
+
+```javascript
+const numbers = [1, 2, 3, 4, -1, 352, -12, 1];
+
+numbers.sort();
+console.log(numbers); // [-1, -12, 1, 1, 2, 3, 352, 4]
+
+numbers.sort((a, b) => {
+    if (a < b) {
+        return -1;
+    } else if (a == b) {
+        return 0;
+    } else {
+        return 1;
+    }
+});
+console.log(numbers); // [-12, -1, 1, 1, 2, 3, 4, 352]
+
+numbers.reverse();
+console.log(numbers); // [352, 4, 3, 2, 1, 1, -1, -12]
+```
+
+## Predicate checks
+* `some(predicate: (value: number, index: number, array: number[]) => unknown, thisArg?: any)` &rarr; returns `true` if **at least one** array element is satisfying the predicate
+* `every(predicate: (value: number, index: number, array: number[]) => unknown, thisArg?: any)` &rarr; returns `true` if **every** array element is satisfying the predicate
+```javascript
+const numbers = [1, 2, 3, 4, -1, 352, -12, 1];
+
+console.log(numbers.every(number => number > 0)); // false
+console.log(numbers.some(number => number === 352)); // true
+```
+
+## Filtering
+* `filter(predicate: (value: number, index: number, array: number[]) => unknown, thisArg?: any)` &rarr; retains only elements satisfying the predicate criteria
+> Is not `in-place` change. Is returing a modified copy of the initial array
+
+```javascript
+const numbers = [1, 2, 3, 4, -1, 352, -12, 1];
+
+console.log(numbers.filter(number => number != 1)); // [2, 3, 4, -1, 352, -12]
+```
+
+## Mapping an array
+* `map()` &rarr; a function that accepts another **producer function** that will iteratively perform some changes to each array element. As a result result modified copy of an array.
+```javascript
+const numbers = [1, 2, 3, 4];
+
+const mapped = numbers.map(number => `<li>${number}</li>`);
+
+console.log(`<ul>${mapped.join('')}</ul>`); // <ul><li>1</li><li>2</li><li>3</li><li>4</li></ul>
+```
+
+## Reducing an array
+* `reduce(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: number[]))` &rarr; a function that reduces array to one element. Over each array element operation can be performed and accumulation function parameter will hold the reduced array
+```javascript
+const numbers = [1, 2, 3, 4];
+
+const reduced = numbers.reduce((accumulator, currentValue) => accumulator + currentValue);
+
+console.log(reduced); // 10
+```
