@@ -48,7 +48,24 @@ led d = 'Test 2';
 
 ### `let` VS `var` ⚖️
 
-- `var` was before ES6. From ES6 there is a good practice to use `let`
+- `var` was before ES6. From ES6 there is a good practice to use `let` or `const`
+- `var` is **function scoped** &rarr; varible is accessible <u>anywhere in the parent function where it was defined</u>
+- `let` is **block scoped** &rarr; varible is accessible <u>only in the block where it was defined</u>
+- **Block** is literally all the expressions enclosed in `{}`
+
+```javascript
+function test() {
+  if (1 === 1) var a = 5;
+
+  console.log(a); // 5 instead of error
+
+  for (var i = 0; i < 7; i++) {}
+
+  console.log(i); // 7 instead of error
+}
+
+test();
+```
 
 ### `typeof` operator 🔍
 
@@ -81,14 +98,16 @@ typeof c; // 'object'
 - Symbol
 
 #### String methods
-* `.split(separator: string)` &rarr; from the string produces new array with its values by given separator (if separator doesn't exists, then array with the initial string is returned as a single element)
+
+- `.split(separator: string)` &rarr; from the string produces new array with its values by given separator (if separator doesn't exists, then array with the initial string is returned as a single element)
+
 ```javascript
 const str = "This is my first day!";
 
-const splitted = str.split(' ');
+const splitted = str.split(" ");
 console.log(splitted); // ['This', 'is', 'my', 'first', 'day!']
 
-const joinedStr = splitted.join('-'); 
+const joinedStr = splitted.join("-");
 console.log(joinedStr); // This-is-my-first-day!
 ```
 
@@ -711,33 +730,41 @@ const c3 = Circle.call({}, 1, 2);
 # Arrays 📚
 
 ## General info
-* Arrays are `objects`, so their properties can be retrieved via dot `.` notation
+
+- Arrays are `objects`, so their properties can be retrieved via dot `.` notation
 
 ## Iterating an array
 
 ### Using `for()` loop
+
 ```javascript
 const numbers = [1, 2, 3, 4, 5];
 
 for (const number of numbers) {
-    console.log(number);
+  console.log(number);
 }
 ```
 
 ### Using `forEach()` function
-* Has optional paremter to retrieve **index** of the element
+
+- Has optional paremter to retrieve **index** of the element
+
 ```javascript
 const numbers = [1, 2, 3, 4, 5];
 
-numbers.forEach((number, index) => console.log(`Index: ${index}, Number: ${number}`));
+numbers.forEach((number, index) =>
+  console.log(`Index: ${index}, Number: ${number}`),
+);
 ```
 
 ## General purpose methods
 
 ### Adding elements
-* Add elements to the very **end** &rarr; `.push(...items: number[])` 
-* Add elements to the very **start** &rarr; `.unshift(...items: number[])`
-* Add elements to the **whatever position** &rarr; `.splice(startIndex: number, elementsToDeleteFromThatIndex: number, ...items: number[])`
+
+- Add elements to the very **end** &rarr; `.push(...items: number[])`
+- Add elements to the very **start** &rarr; `.unshift(...items: number[])`
+- Add elements to the **whatever position** &rarr; `.splice(startIndex: number, elementsToDeleteFromThatIndex: number, ...items: number[])`
+
 ```javascript
 const numbers = [1, 2, 3, 4, 5];
 
@@ -753,15 +780,18 @@ console.log(numbers);
 ### Finding elements
 
 #### Value search
-* `indexOf(val: number, fromIndex: number)` &rarr; index of element if exists, otherwise **-1**
-* `lastIndexOf(val: number, fromIndex: number)` &rarr; index of element if exists, otherwise **-1**
-* `includes(val: number, fromIndex: number)` &rarr; **true** in case element exists
+
+- `indexOf(val: number, fromIndex: number)` &rarr; index of element if exists, otherwise **-1**
+- `lastIndexOf(val: number, fromIndex: number)` &rarr; index of element if exists, otherwise **-1**
+- `includes(val: number, fromIndex: number)` &rarr; **true** in case element exists
 
 #### Predicate search
-* `find(function predicate() {...})` &rarr; **true** in case element exists
-* `findIndex(function predicate() {...})` &rarr; index of element if exists, otherwise **-1**
+
+- `find(function predicate() {...})` &rarr; **true** in case element exists
+- `findIndex(function predicate() {...})` &rarr; index of element if exists, otherwise **-1**
 
 #### Primitives
+
 ```javascript
 const numbers = [1, 2, 3, 4, 5, 3];
 
@@ -771,22 +801,27 @@ console.log(numbers.includes(9)); // false
 ```
 
 #### Reference types
-* By default reference types are check by the **reference equality** &rarr; that's why they should be searched for by the **predicate functions**
+
+- By default reference types are check by the **reference equality** &rarr; that's why they should be searched for by the **predicate functions**
+
 ```javascript
 const courses = [
   { id: 1, name: "JavaScript Basics", duration: "3 hours" },
   { id: 2, name: "Advanced React", duration: "5 hours" },
 ];
 
-const foundCourse = courses.find(function(course) {
-    return course.name === "Advanced React";
+const foundCourse = courses.find(function (course) {
+  return course.name === "Advanced React";
 });
 
-console.log(courses.includes({ id: 2, name: "Advanced React", duration: "5 hours" })); // false
+console.log(
+  courses.includes({ id: 2, name: "Advanced React", duration: "5 hours" }),
+); // false
 console.log(foundCourse); // { id: 2, name: "Advanced React", duration: "5 hours" }
 ```
 
 #### Arrow functions (lambda functions)
+
 ```javascript
 const courses = [
   { id: 1, name: "JavaScript Basics", duration: "3 hours" },
@@ -799,38 +834,42 @@ const courses = [
 // });
 
 // With arrow function
-const foundCourse = courses.find(course => course.name === "Advanced React");
+const foundCourse = courses.find((course) => course.name === "Advanced React");
 
 console.log(foundCourse);
 ```
 
 ### Removing elements
-* Remove element from the very **end** &rarr; `.pop()` 
-* Remove element from the very **start** &rarr; `.shift()`
-* Remove element(s) from the **whatever position** &rarr; `.splice(startIndex: number, elementsToDeleteFromThatIndex: number)`
+
+- Remove element from the very **end** &rarr; `.pop()`
+- Remove element from the very **start** &rarr; `.shift()`
+- Remove element(s) from the **whatever position** &rarr; `.splice(startIndex: number, elementsToDeleteFromThatIndex: number)`
+
 ```javascript
 const numbers = [1, 2, 3, 4, 5];
 
 const popF = numbers.pop();
 
-console.log('After pop:', numbers); // [1, 2, 3, 4]
-console.log('Popped value:', popF); // 5
+console.log("After pop:", numbers); // [1, 2, 3, 4]
+console.log("Popped value:", popF); // 5
 
 const shiftF = numbers.shift();
 
-console.log('After shift:', numbers); // [2, 3, 4]
-console.log('Shifted value:', shiftF); // 1
+console.log("After shift:", numbers); // [2, 3, 4]
+console.log("Shifted value:", shiftF); // 1
 
 const spliceF = numbers.splice(1, 2);
 
-console.log('After splice:', numbers); // [2, 4]
-console.log('Spliced values:', spliceF); // [3, 4]
+console.log("After splice:", numbers); // [2, 4]
+console.log("Spliced values:", spliceF); // [3, 4]
 ```
 
 #### Emptying of the array
+
 1. Assigning to the **new empty array** (is not good when **multiple references** exist to the same array)
 2. Set `length` to **0**
 3. Splicing from 0 index till the last index
+
 ```javascript
 const numbers = [1, 2, 3, 4, 5];
 
@@ -845,16 +884,19 @@ const numbers = [1, 2, 3, 4, 5];
 ```
 
 ### Combining & slicing
+
 > Operations are returning new modified array, not doing the `in-place` edit
 
 > `Primitives`: **values** are copied/removed, `Reference types`: **references** are copied/removed
 
 #### Methods
-* `.concat(array: number[])` 
-* `.slice(inclusiveFromIndex: number, exclusiveToIndex: number)`
+
+- `.concat(array: number[])`
+- `.slice(inclusiveFromIndex: number, exclusiveToIndex: number)`
+
 ```javascript
 const numbers = [1, 2, 3, 4, 5];
-const doubledNumbers = numbers.map(num => num * 2);
+const doubledNumbers = numbers.map((num) => num * 2);
 
 const concatF = numbers.concat(doubledNumbers);
 
@@ -868,10 +910,12 @@ console.log(slicedNumbers); // [3, 4]
 ```
 
 #### Using `... spread operator` for combining arrays (ES6)
-* Spread operator &mdash; is an operator thar decomposes one array into to separate its elements (is working similar to the Java `varargs` operator)
+
+- Spread operator &mdash; is an operator thar decomposes one array into to separate its elements (is working similar to the Java `varargs` operator)
+
 ```javascript
 const numbers = [1, 2, 3, 4, 5];
-const doubledNumbers = numbers.map(num => num * 2);
+const doubledNumbers = numbers.map((num) => num * 2);
 
 const combined = [...numbers, ...doubledNumbers];
 
@@ -879,19 +923,22 @@ console.log(combined); // [1, 2, 3, 4, 5, 2, 4, 6, 8, 10]
 ```
 
 ### Join the elements
-* `join(separator: string)` &rarr; create a string and after each element insert a separator **excluding the last one**
+
+- `join(separator: string)` &rarr; create a string and after each element insert a separator **excluding the last one**
+
 ```javascript
 const numbers = [1, 2, 3, 4, 5];
 
-const joinedArr = numbers.join(', ');
+const joinedArr = numbers.join(", ");
 
 console.log(joinedArr); // 1, 2, 3, 4, 5
 console.log(typeof joinedArr); // string
 ```
 
 ### Sorting
-* `.sort(compareFn?: ((a: number, b: number) => number) | undefined)` &rarr; **in-place** method to sort an array in **ascending order** by default or is using a **compare function** if provided
-> `.sort()` performs sorting in ascending order over the values that are **converted to strings** in case `no comparator function (predicate) was supplied`. String values are compared by the **ASCII table**
+
+- `.sort(compareFn?: ((a: number, b: number) => number) | undefined)` &rarr; **in-place** method to sort an array in **ascending order** by default or is using a **compare function** if provided
+  > `.sort()` performs sorting in ascending order over the values that are **converted to strings** in case `no comparator function (predicate) was supplied`. String values are compared by the **ASCII table**
 
 ```javascript
 const numbers = [1, 2, 3, 4, -1, 352, -12, 1];
@@ -900,13 +947,13 @@ numbers.sort();
 console.log(numbers); // [-1, -12, 1, 1, 2, 3, 352, 4]
 
 numbers.sort((a, b) => {
-    if (a < b) {
-        return -1;
-    } else if (a == b) {
-        return 0;
-    } else {
-        return 1;
-    }
+  if (a < b) {
+    return -1;
+  } else if (a == b) {
+    return 0;
+  } else {
+    return 1;
+  }
 });
 console.log(numbers); // [-12, -1, 1, 1, 2, 3, 4, 352]
 
@@ -915,41 +962,235 @@ console.log(numbers); // [352, 4, 3, 2, 1, 1, -1, -12]
 ```
 
 ## Predicate checks
-* `some(predicate: (value: number, index: number, array: number[]) => unknown, thisArg?: any)` &rarr; returns `true` if **at least one** array element is satisfying the predicate
-* `every(predicate: (value: number, index: number, array: number[]) => unknown, thisArg?: any)` &rarr; returns `true` if **every** array element is satisfying the predicate
+
+- `some(predicate: (value: number, index: number, array: number[]) => unknown, thisArg?: any)` &rarr; returns `true` if **at least one** array element is satisfying the predicate
+- `every(predicate: (value: number, index: number, array: number[]) => unknown, thisArg?: any)` &rarr; returns `true` if **every** array element is satisfying the predicate
+
 ```javascript
 const numbers = [1, 2, 3, 4, -1, 352, -12, 1];
 
-console.log(numbers.every(number => number > 0)); // false
-console.log(numbers.some(number => number === 352)); // true
+console.log(numbers.every((number) => number > 0)); // false
+console.log(numbers.some((number) => number === 352)); // true
 ```
 
 ## Filtering
-* `filter(predicate: (value: number, index: number, array: number[]) => unknown, thisArg?: any)` &rarr; retains only elements satisfying the predicate criteria
-> Is not `in-place` change. Is returing a modified copy of the initial array
+
+- `filter(predicate: (value: number, index: number, array: number[]) => unknown, thisArg?: any)` &rarr; retains only elements satisfying the predicate criteria
+  > Is not `in-place` change. Is returing a modified copy of the initial array
 
 ```javascript
 const numbers = [1, 2, 3, 4, -1, 352, -12, 1];
 
-console.log(numbers.filter(number => number != 1)); // [2, 3, 4, -1, 352, -12]
+console.log(numbers.filter((number) => number != 1)); // [2, 3, 4, -1, 352, -12]
 ```
 
 ## Mapping an array
-* `map()` &rarr; a function that accepts another **producer function** that will iteratively perform some changes to each array element. As a result result modified copy of an array.
+
+- `map()` &rarr; a function that accepts another **producer function** that will iteratively perform some changes to each array element. As a result result modified copy of an array.
+
 ```javascript
 const numbers = [1, 2, 3, 4];
 
-const mapped = numbers.map(number => `<li>${number}</li>`);
+const mapped = numbers.map((number) => `<li>${number}</li>`);
 
-console.log(`<ul>${mapped.join('')}</ul>`); // <ul><li>1</li><li>2</li><li>3</li><li>4</li></ul>
+console.log(`<ul>${mapped.join("")}</ul>`); // <ul><li>1</li><li>2</li><li>3</li><li>4</li></ul>
 ```
 
 ## Reducing an array
-* `reduce(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: number[]))` &rarr; a function that reduces array to one element. Over each array element operation can be performed and accumulation function parameter will hold the reduced array
+
+- `reduce(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: number[]))` &rarr; a function that reduces array to one element. Over each array element operation can be performed and accumulation function parameter will hold the reduced array
+
 ```javascript
 const numbers = [1, 2, 3, 4];
 
-const reduced = numbers.reduce((accumulator, currentValue) => accumulator + currentValue);
+const reduced = numbers.reduce(
+  (accumulator, currentValue) => accumulator + currentValue,
+);
 
 console.log(reduced); // 10
+```
+
+# Functions
+
+## Define a function
+
+### Function declaration
+
+- Standalone function that can be called
+- `When can be called`: even **before (above in the code) it's defined**
+  - &rarr; When JS engine executes a code it moves all the function declarations to the very top of the file automatically (`hoisting`)
+
+```javascript
+test();
+
+function test() {
+  console.log("test");
+}
+```
+
+### Function expression
+
+- Variable that is holding a function. That is possible since `function` is also an `object`
+- There are 2 types of function expression:
+  - **Named** &rarr; when created function has name
+  - **Anonymous** &rarr; when created function doesn't have name
+- `When can be called`: only **after it's defined in the code (below definition statement)**
+
+```javascript
+// Named function expression
+let test = function test() {
+  console.log("test");
+};
+
+// Anonymous function expression
+let test2 = function () {
+  console.log("test2");
+};
+
+test(); // test
+```
+
+## Arguments
+
+- **Should we always fill them**: Even though functions can declare parameters, that **function can be called without stating them fully** or **there can be passed more than declared** (default values for them will be applied &rarr; `undefined`)
+
+```javascript
+function test(a, b) {
+  console.log(`Type of b: ${typeof b}`); // Type of b: undefined
+  return a + b;
+}
+
+console.log(test(1)); // NaN
+console.log(test(1, 2, 3)); // 3 | '3' is not used
+```
+
+### Varying number of parameters
+
+- Every function has local variable `arguments` that holds all the arguments. That object has **iterator and can be iterated**
+- Modern JS has **rest operator** `...` that can accept any number of parameters (like **varargs** in Java)
+  - In case used, **rest parameter** should be very last function parameter (since it basically means <u>infinite count of parameters</u>)
+
+```javascript
+function sumParams() {
+  let total = 0;
+  for (const val of arguments) total += val;
+
+  return total;
+}
+
+console.log(sumParams(1, 2, 3)); // 6
+
+// Modern approach
+function sumParamsRest(...numbers) {
+  numbers.reduce((prev, cur) => prev + cur);
+}
+
+console.log(sumParamsRest(1, 2, 3, 4)); // 10
+```
+
+### Default parameters
+
+- Function can have parameters that if not filled with values will use **default ones from the declaration**
+- **What value will shadow default value**: every value that is <u>not</u> `undefined`
+- **Best practice**: default parameter(s) should be the <u>last one(s) in the function declaration</u>
+
+```javascript
+function Person(firstName, lastName, isAlive = true, isGay = false) {
+  this.firstName = firstName;
+  this.lastName = lastName;
+  this.isAlive = isAlive; // ES6
+  this.isGay = isGay; // ES6
+  // Before ES6: this.isAlive = isAlive || true;
+  // Before ES6: this.isAlice = isGay || false;
+}
+
+console.log(new Person("Ivan", "Alekseev", undefined, true)); // Person {firstName: 'Ivan', lastName: 'Alekseev', isAlive: true, isGay: true}
+console.log(new Person("Ivan", "Alekseev", false)); // Person {firstName: 'Ivan', lastName: 'Alekseev', isAlive: false, isGay: false}
+```
+
+### Getters & setters
+
+- **Getter** &rarr; a special `get` function that is needed to return some specific data without mutation (**can perform some computations in them**)
+- **Setter** &rarr; a special `set` function that is needed to set object field values (**can perform some data validations before setting a new value**)
+- **Difference from object methods**: can be called like a <u>variables</u>, not like a <u>functions</u>
+
+```javascript
+const triangle = {
+  aLength: 1,
+  bLength: 2,
+  cLength: 3,
+  get perimeter() {
+    return this.aLength + this.bLength + this.cLength;
+  },
+  set setALength(length) {
+    if (length <= 0) {
+      throw new Error(`Invalid length: ${length} for the triangle side`);
+    } else {
+      this.aLength = length;
+    }
+  },
+};
+
+triangle.setALength = 4;
+
+console.log(triangle.perimeter);
+```
+
+## Error handling
+
+- **Defensive programming** &rarr; validating function input **right at the beginning** so short-circuit can happen
+- Exception should be thrown in case of failure situation
+
+```javascript
+const triangle = {
+  aLength: 1,
+  bLength: 2,
+  cLength: 3,
+  set setALength(length) {
+    if (length <= 0) {
+      throw new Error(`Invalid length: ${length} for the triangle side`);
+    } else {
+      this.aLength = length;
+    }
+  },
+};
+
+try {
+  triangle.setALength = -4;
+} catch (error) {
+  alert(error); // Is not reccomended, an old way but is fine for demo
+}
+```
+
+### Exception vs error (**JS context**)
+
+- Object `Error` is a simple object that can be instantiated with `new` &rarr; it becomes **exception** thah should be handled once is used with `throw` keyword
+
+## Scope
+
+- **Defined with**: defined with `const` or `let`
+- `Local(block) scope` &rarr; variables/objects that are accessible only in the block where they were defined and recursively in sub-blocks
+- `Global scope` &rarr; variables/objects that are not defined in any block and are accessible throughout the file
+  - Are considered bad practice since are accessible from everywhere and can lead to hardly tracked issues
+- **Precendence(priority)**: local variable with for has higher precendence to global one
+
+```javascript
+// Global
+let b = 6;
+const color = "red";
+
+function test() {
+  // Local
+  const a = 5;
+  const color = "blue";
+
+  b = 7;
+
+  console.log(color); // blue
+}
+
+test();
+
+// console.log(a); // 'a' is not defined
+console.log(b); // 7
 ```
