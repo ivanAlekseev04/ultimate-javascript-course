@@ -49,8 +49,8 @@ led d = 'Test 2';
 ### `let` VS `var` ⚖️
 
 - `var` was before ES6. From ES6 there is a good practice to use `let` or `const`
-- `var` is **function scoped** &rarr; varible is accessible <u>anywhere in the parent function where it was defined</u>
-- `let` is **block scoped** &rarr; varible is accessible <u>only in the block where it was defined</u>
+- `var` is **function scoped** &rarr; varible is accessible **anywhere in the parent function where it was defined**
+- `let` is **block scoped** &rarr; varible is accessible **only in the block where it was defined**
 - **Block** is literally all the expressions enclosed in `{}`
 
 ```javascript
@@ -1068,7 +1068,7 @@ console.log(test(1, 2, 3)); // 3 | '3' is not used
 
 - Every function has local variable `arguments` that holds all the arguments. That object has **iterator and can be iterated**
 - Modern JS has **rest operator** `...` that can accept any number of parameters (like **varargs** in Java)
-  - In case used, **rest parameter** should be very last function parameter (since it basically means <u>infinite count of parameters</u>)
+  - In case used, **rest parameter** should be very last function parameter (since it basically means **infinite count of parameters**)
 
 ```javascript
 function sumParams() {
@@ -1091,8 +1091,8 @@ console.log(sumParamsRest(1, 2, 3, 4)); // 10
 ### Default parameters
 
 - Function can have parameters that if not filled with values will use **default ones from the declaration**
-- **What value will shadow default value**: every value that is <u>not</u> `undefined`
-- **Best practice**: default parameter(s) should be the <u>last one(s) in the function declaration</u>
+- **What value will shadow default value**: every value that is **not** `undefined`
+- **Best practice**: default parameter(s) should be the **last one(s) in the function declaration**
 
 ```javascript
 function Person(firstName, lastName, isAlive = true, isGay = false) {
@@ -1112,7 +1112,7 @@ console.log(new Person("Ivan", "Alekseev", false)); // Person {firstName: 'Ivan
 
 - **Getter** &rarr; a special `get` function that is needed to return some specific data without mutation (**can perform some computations in them**)
 - **Setter** &rarr; a special `set` function that is needed to set object field values (**can perform some data validations before setting a new value**)
-- **Difference from object methods**: can be called like a <u>variables</u>, not like a <u>functions</u>
+- **Difference from object methods**: can be called like a **variables**, not like a **functions**
 
 ```javascript
 const triangle = {
