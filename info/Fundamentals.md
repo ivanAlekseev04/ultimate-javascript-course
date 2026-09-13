@@ -166,12 +166,10 @@ console.log(a); // { a = 5 }
 - Array elements are indexed starting from 0
 - Elements are accessed using bracket notation (array[indexOfTheElement])
 - In case we are accesing element of an array that is not existing, then you'll get **undefined**
-- In case we are assigning value to an unexisting index of the array,
-  then the array will extend it's length until that index and will assign desired value to the choosen index
-
-```javascript
-let arr = ["a", 5];
-console.log(arr); // ['a', 5]
+- In case we are assigning value to an unexisting e array,
+  then the array will extend it's length until that ill assign desired value to the choosen avascript
+  let arr = ["a", 5];
+  console.log(arr); // ['a', 5]
 
 console.log(arr[1]); // 5
 console.log(arr[2]); // undefined
@@ -180,7 +178,8 @@ arr[3] = "test";
 console.log(arr.length); // 4
 console.log(arr); // ['a', 5, empty, 'test']
 console.log(arr[2]); // undefined
-```
+
+````
 
 #### Function ⚙️
 
@@ -205,7 +204,7 @@ test("Test"); // Here 'Test' is an argument
 
 let a = 5;
 test(a);
-```
+````
 
 ### Truthy & falsy values (additional information, not related strictly to the value/reference types) 🌓
 
@@ -747,13 +746,12 @@ for (const number of numbers) {
 
 ### Using `forEach()` function
 
-- Has optional paremter to retrieve **index** of the element
+- Has optional paremter to retrieve \*\*the element
 
 ```javascript
 const numbers = [1, 2, 3, 4, 5];
 
-numbers.forEach((number, index) =>
-  console.log(`Index: ${index}, Number: ${number}`),
+numbers.forEach((number,  console.log(`Index: ${ber: ${number}`),
 );
 ```
 
@@ -781,14 +779,14 @@ console.log(numbers);
 
 #### Value search
 
-- `indexOf(val: number, fromIndex: number)` &rarr; index of element if exists, otherwise **-1**
-- `lastIndexOf(val: number, fromIndex: number)` &rarr; index of element if exists, otherwise **-1**
+- `indexOf(val: number, fromIndex: number)` &rarr; ement if exists, otherwise **-1**
+- `lastIndexOf(val: number, fromIndex: number)` &rarr; ement if exists, otherwise **-1**
 - `includes(val: number, fromIndex: number)` &rarr; **true** in case element exists
 
 #### Predicate search
 
 - `find(function predicate() {...})` &rarr; **true** in case element exists
-- `findIndex(function predicate() {...})` &rarr; index of element if exists, otherwise **-1**
+- `findIndex(function predicate() {...})` &rarr; ement if exists, otherwise **-1**
 
 #### Primitives
 
@@ -868,10 +866,8 @@ console.log("Spliced values:", spliceF); // [3, 4]
 
 1. Assigning to the **new empty array** (is not good when **multiple references** exist to the same array)
 2. Set `length` to **0**
-3. Splicing from 0 index till the last index
-
-```javascript
-const numbers = [1, 2, 3, 4, 5];
+3. Splicing from 0 the last avascript
+   const numbers = [1, 2, 3, 4, 5];
 
 // 1 variant
 // numbers = [];
@@ -881,7 +877,8 @@ const numbers = [1, 2, 3, 4, 5];
 
 // 3 variant
 // numbers.splice(0, numbers.length);
-```
+
+````
 
 ### Combining & slicing
 
@@ -907,7 +904,7 @@ const slicedNumbers = numbers.slice(2, 4);
 
 console.log(numbers); // original array
 console.log(slicedNumbers); // [3, 4]
-```
+````
 
 #### Using `... spread operator` for combining arrays (ES6)
 
@@ -963,8 +960,8 @@ console.log(numbers); // [352, 4, 3, 2, 1, 1, -1, -12]
 
 ## Predicate checks
 
-- `some(predicate: (value: number, index: number, array: number[]) => unknown, thisArg?: any)` &rarr; returns `true` if **at least one** array element is satisfying the predicate
-- `every(predicate: (value: number, index: number, array: number[]) => unknown, thisArg?: any)` &rarr; returns `true` if **every** array element is satisfying the predicate
+- `some(predicate: (value: number, er, array: number[]) => unknown, thisArg?: any)` &rarr; returns `true` if **at least one** array element is satisfying the predicate
+- `every(predicate: (value: number, er, array: number[]) => unknown, thisArg?: any)` &rarr; returns `true` if **every** array element is satisfying the predicate
 
 ```javascript
 const numbers = [1, 2, 3, 4, -1, 352, -12, 1];
@@ -975,7 +972,7 @@ console.log(numbers.some((number) => number === 352)); // true
 
 ## Filtering
 
-- `filter(predicate: (value: number, index: number, array: number[]) => unknown, thisArg?: any)` &rarr; retains only elements satisfying the predicate criteria
+- `filter(predicate: (value: number, er, array: number[]) => unknown, thisArg?: any)` &rarr; retains only elements satisfying the predicate criteria
   > Is not `in-place` change. Is returing a modified copy of the initial array
 
 ```javascript
@@ -1193,4 +1190,75 @@ test();
 
 // console.log(a); // 'a' is not defined
 console.log(b); // 7
+```
+
+## `this.` keyword
+
+- Pointer to an object that is executing a current function
+- In case function is **part of an object** (actually called **method**) &rarr; `this` points to that particular object
+- In case function is **NOT part of an object** &rarr; `this` points to the global object (`window`)
+  - If we call a function with `new` operator, then `this` will immediately start pointing to the newly created empty object
+- Arrow function `arg => console.log(arg)` doesn't have its own `this` pointer. It retrieves that pointer from the context/inherits from the parent &rarr; in case is used inside an object it will **always** point to an object
+
+```javascript
+function Movie() {
+  console.log(this);
+}
+
+Movie(); // Window {...}
+
+const m = new Movie(); // Movie {}
+```
+
+### `this` example: normal function vs arrow function
+
+```javascript
+const test = {
+  title: "Test title",
+  tags: [1, "a", "dsad", 32],
+  showTags() {
+    this.tags.forEach((tag) =>
+      console.log(`Title: ${this.title}, tag: ${tag}`),
+    );
+  },
+  showTags2() {
+    this.tags.forEach(function (tag) {
+      console.log(`Title: ${this.title}, tag: ${tag}`);
+    }); // as a second argument to `forEach` we can give `this` and will point to `test`
+  },
+};
+
+test.showTags();
+console.log("------------------");
+test.showTags2();
+
+// Title: Test title, tag: 1
+// Title: Test title, tag: a
+// Title: Test title, tag: dsad
+// Title: Test title, tag: 32
+// ------------------
+// Title: undefined, tag: 1
+// Title: undefined, tag: a
+// Title: undefined, tag: dsad
+// Title: undefined, tag: 32
+```
+
+### Setting/changing `this`
+
+- `.call(thisArg, ...arguments)` &rarr; this method is executed under the hood when function is called like that `function(arg1, arg2);`. For one function call `this` object can be set **explicitly**
+- `.apply(thisArg, arguments[])` &rarr; the same as `call()` but arguments should be passed as an array
+- `.bind(thisArg)` &rarr; once is called it **returns a copy function with explicitly binded to it custom `this` object**
+
+```javascript
+function test(arg1, arg2) {
+  console.log(this);
+}
+
+test(); // Window {...}
+
+test.call({ test: "test" }, 1, 2); // { test: 'test' }
+test.call({ test: "test" }, [1, 2]); // { test: 'test' }
+
+const bindedFunc = test.bind({ test2: "test2" });
+bindedFunc(); // { test2: 'test2' }
 ```
